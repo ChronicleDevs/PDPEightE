@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<%- include('layout') %>
+<body>
+<div
+        class="w-screen h-screen grow pattern-wavy pattern-gray-600 pattern-bg-gray-800 pattern-opacity-60 pattern-size-32"
+></div>
+<div class="p-4 absolute inset-0 w-10/12 h-4/5 bg-gray-500/30 shadow-lg backdrop-blur-md m-auto flex justify-center rounded-lg items-center flex-col">
+    <!--    <button id="send" onclick="emitMsg('haloooo')">Senndd</button>-->
+
+    <h1 class="mx-auto text-5xl text-center sm:text-6xl text-warmGray-100 mt-6 font-ariba font-bold drop-shadow-lg mb-6 ">Setup PR atau Tugas</h1>
+    <form method="post" action="/blob" id="formnya">
+        <div class="space-y-2 font-dmsans">
+
+            <input type="hidden" name="storage" id="Storage">
+            <label class="text-gray-800 text-sm block m-auto text-md font-ariba">Mata Pelajaran</label>
+            <button
+                    id="dropdownButton" type="button"
+                    class="relative no-scrollbar group transition-all duration-200 focus:overflow-visible w-full h-max p-2 overflow-scroll flex flex-row items-center justify-center focus:bg-gray-200/30 text-gray-300 bg-blueGray-300/30  gap-2 rounded-lg border border-gray-500">
+                <span id="main-h">Pilih MAPEL</span>
+                <svg class="
+                  <div>rotate-90 group-focus:rotate-180" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="m12 10.8l-3.9 3.9q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7l4.6-4.6q.3-.3.7-.3t.7.3l4.6 4.6q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275z" />
+                </svg>
+                <div
+                        id="dropdownContent"
+                        class="hidden overflow-scroll absolute shadow-lg -bottom-40 left-0 w-full h-80 p-2 text-black bg-gray-200 z-50 backdrop-blur-md border border-gray-500 rounded-lg flex flex-col gap-2">
+                    <% for (let [mapp, tugas] of Object.entries(mapel)) { %><span class="dropdown-item flex flex-row gap-2 items-center hover:bg-gray-400 hover:text-gray-100 p-2 rounded-lg" data-value=<%= mapp.toLowerCase()  %>><p><%= mapp.toUpperCase() %></p></span><% }%>
+                </div>
+            </button>
+        </div>
+        <div>
+            <label class="text-gray-800 text-sm mb-2 block mt-2">Tugas, PR atau Hal yang berkaitan.</label>
+            <input name="content" type="text" required class="focus:bg-blueGray-200/30 text-gray-300 bg-blueGray-300/30 backdrop-blur-md border border-gray-500 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Tugas/PR, Contoh: LKS Hal 15" />
+        </div>
+        <div>
+            <label class="text-gray-800 text-sm mb-2 block mt-2">Catatan</label>
+            <input name="note" type="text" height="45" class="text-gray-300 bg-gray-300/30 border border-gray-500 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Catatan, Contoh:  Jangan lupa besok ada kegiatan (...)" />
+        </div>
+
+
+        <div class="!mt-12">
+            <button type="submit" id="luwak" class="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                Submit !
+            </button>
+        </div>
+        <p class="text-gray-800 text-sm mt-6 text-center">Ada masalah? <a href="javascript:void(0);" class="text-blue-600 font-semibold hover:underline ml-1">Hubungi Cethydexyl</a></p>
+    </form>
+</div>
+<script>
+
+    var quoteHariIni = "<%= keypwd %>";
+
+    Object.defineProperty(String.prototype, 'capitalize', {
+        value: function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        },
+        enumerable: false
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdownButton = document.getElementById('dropdownButton');
+        const dropdownContent = document.getElementById('dropdownContent');
+        const txMainH = document.getElementById("main-h");
+        const nvche = document.getElementById("Storage")
+        let selectedValue = null;
+        // Toggle dropdown visibility
+        dropdownButton.addEventListener('click', function () {
+            dropdownContent.classList.toggle('hidden');
+        });
+
+        // Handle dropdown item click
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function () {
+                // dropdownContent.classList.toggle('hidden');
+
+                selectedValue = this.getAttribute('data-value')
+                txMainH.innerHTML = selectedValue.toUpperCase();
+                nvche.value = selectedValue
+                console.log('Selected:', selectedValue);
+            });
+        });
+
+        // Optional: Close the dropdown if clicked outside
+        document.addEventListener('click', function (event) {
+            if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+                dropdownContent.classList.add('hidden');
+            }
+        });
+    });
+
+    function subm(){
+        if (document.querySelector("#Storage").value.length===0){
+            return;
+        }else{
+            document.querySelector("#formnya").submit()
+        }
+    }
+
+    // Init socket i
+</script>
+</body>
+</html>

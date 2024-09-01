@@ -1,0 +1,263 @@
+<%
+
+
+
+const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const monthsOfYear = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+function formatDate(date) {
+  const dayOfWeek = daysOfWeek[date.getDay()];
+  const day = date.getDate();
+  const month = monthsOfYear[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${dayOfWeek}, ${day} ${month} ${year}`;
+}
+
+function getTomorrowDate() {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() + 1);
+  return formatDate(yesterday);
+}
+
+%>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class=" pattern-wavy pattern-gray-200 -z-50 pattern-bg-gray-300 pattern-opacity-100 pattern-size-32">
+
+  <div class="h-max flex-col pb-14 w-[90vw] bg-gray-200/45 backdrop-blur-md align-bottom shadow-2xl mx-auto mt-5 flex justify-center">
+    <div class="h-max pb-8 w-full bg-gray-500/60 backdrop-blur-md">
+      <div class="container mt-8 ml-4">
+        <p class="font-dmsans text-2xl drop-shadow-lg text-gray-100">Besok<br></p>
+        <h1 class="text-6xl font-bold font-dmsans text-gray-100 drop-shadow-lg">
+          <%= getTomorrowDate() %>
+        </h1>
+      </div>
+      <% if (isSuperLogged) { %>
+      <div class="switchReady absolute right-0 mr-5 top-5 ">
+        <form action="/chRdy" method="post">
+        <button id="sigmaskibidi" type="submit" name="btn" class="w-36 text-center h-10 text-sm bg-teal-200/80 hover:bg-teal-400/80 backdrop-blur-md rounded-lg border border-gray-700">Set READY Mark</button>
+        </form>
+      </div>
+      <% } %>
+      <div class="x-item-tugas-container m-auto block">
+        <div class="flex flex-wrap gap-4 p-6 justify-center text-lg font-serif" id="ctx-cont">
+          <% for (let [mapel, tugas] of Object.entries(data.tugas)) { %>
+          <a href="#" id="<%= mapel %>"
+             class="font-dmsans font-bold bg-gray-100 flex-grow text-black border-l-8 border-blue-500 rounded-md px-3 py-2 w-full md:w-5/12 lg:w-3/12">
+            <span id="mydic-<%= mapel %>"><%= mapel.toUpperCase()+" 8E 2024/2025" %></span>
+
+            <div class="text-gray-500 font-thin text-sm pt-1">
+
+              <%= (tugas==="") ? "Tidak ada tugas" : tugas %>
+              <% if (!!!data.isReady) { %>
+              <p id="a" class="text-red-500 font-bold font-dmsans">Peringatan, Data belum terverifikasi dan dapat berubah. Mohon cek lagi pada setiap 30 menit setelah jam 17:00.</p>
+              <% } %>
+            </div>
+          </a>
+          <% } %>
+        </div>
+
+      </div>
+
+      <div class="piket">
+        <h1 class="text-6xl font-dmsans font-bold text-gray-100 ml-10 text-left drop-shadow-lg">Piket Hari Esok</h1><br>
+        <div class="relative flex flex-col text-gray-700 bg-white shadow-md w-3/4 rounded-xl bg-clip-border m-auto">
+          <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+            <div role="button"
+                 class="flex items-center w-full p-3 py-1 pl-4 pr-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+              Item One
+              <div class="grid ml-auto place-items-center justify-self-end">
+                <div
+                        class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button">
+
+                </div>
+              </div>
+            </div>
+            <div role="button"
+                 class="flex items-center w-full p-3 py-1 pl-4 pr-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+              Item Two
+              <div class="grid ml-auto place-items-center justify-self-end">
+                <div
+                        class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button">
+
+                </div>
+              </div>
+            </div>
+            <div role="button"
+                 class="flex items-center w-full p-3 py-1 pl-4 pr-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+              Item Three
+              <div class="grid ml-auto place-items-center justify-self-end">
+                <div
+                        class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button">
+
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <h1 class="text-6xl font-dmsans text-white font-bold text-left ml-10 mt-4">Catatan</h1>
+      <div class="catatan w-5/6 mx-auto mt-6 h-2/4 bg-white p-5">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam cupiditate eaque, eos in maxime molestias nemo odio possimus provident quasi quidem reiciendis tempora tempore velit vitae voluptatem?</p>
+      </div>
+      <button class="w-3/4 h-10 bg-red-400 text-white mx-auto mt-10 block rounded-3xl">Generate text buffer</button>
+    </div>
+  <p class="text-center text-5xl mt-[5vh]">Selamat Datang Di</p>
+  <h1 class="text-center font-dmsans font-bold text-8xl">PDP8E2024</h1>
+    <p class="text-center text-4xl">Pusat Data Pembelajaran <br>8E (MTsN Gresik) 2024</p>
+  <br>
+  <div class="cards">
+    <div class="grid grid-cols-3 sm:grid-cols-2 gap-4 p-10 pt-28">
+
+
+      <div class="block rounded-xl border border-gray-800 p-4 hover:bg-blue-200 cursor-pointer pointer-events-auto" onclick="mahed()">
+            <span class="inline-block rounded-lg p-3">
+                <div class="inline-flex align-middle justify-center items-center select-none text-black">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="32" width="32">
+                      <path d="M7.55556 4.22222C7.55556 2.99492 8.55048 2 9.77778 2C11.0051 2 12 2.99492 12 4.22222V5.44444C12 5.99673 12.4477 6.44444 13 6.44444H16.5556C17.1078 6.44444 17.5556 6.89216 17.5556 7.44444V11C17.5556 11.5523 18.0033 12 18.5556 12H19.7778C21.0051 12 22 12.9949 22 14.2222C22 15.4496 21.0051 16.4444 19.7778 16.4444H18.5556C18.0033 16.4444 17.5556 16.8922 17.5556 17.4444V21C17.5556 21.5523 17.1078 22 16.5556 22H13C12.4477 22 12 21.5523 12 21V19.7778C12 18.5504 11.0051 17.5556 9.77778 17.5556C8.55048 17.5556 7.55556 18.5504 7.55556 19.7778V21C7.55556 21.5523 7.10784 22 6.55556 22H3C2.44772 22 2 21.5523 2 21V17.4444C2 16.8922 2.44772 16.4444 3 16.4444H4.22222C5.44952 16.4444 6.44444 15.4496 6.44444 14.2222C6.44444 12.9949 5.44952 12 4.22222 12H3C2.44772 12 2 11.5523 2 11V7.44444C2 6.89216 2.44772 6.44444 3 6.44444H6.55556C7.10784 6.44444 7.55556 5.99673 7.55556 5.44444V4.22222Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+                   </svg>
+                </div>
+            </span>
+        <h2 class="mt-2 font-semibold text-base sm:text-lg text-black">
+          Submit PR atau TUGAS
+        </h2>
+        <p class="sm:mt-1 block text-sm sm:text-base text-gray-800"> Memasukkan Data PR atau TUGAS ke sistem untuk dijadwal ( Dimohon tidak submit pada: 16:30-17:00 )
+        </p>
+      </div>
+
+      <div class="block rounded-xl border border-gray-800 p-4">
+            <span class="inline-block rounded-lg p-3">
+                <div class="inline-flex align-middle justify-center items-center select-none text-black">
+                    <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="32" width="32">
+                      <path d="M12.6586 11.62C12.6286 11.62 12.6086 11.62 12.5786 11.62C12.5286 11.61 12.4586 11.61 12.3986 11.62C9.49859 11.53 7.30859 9.25 7.30859 6.44C7.30859 3.58 9.63859 1.25 12.4986 1.25C15.3586 1.25 17.6886 3.58 17.6886 6.44C17.6786 9.25 15.4786 11.53 12.6886 11.62C12.6786 11.62 12.6686 11.62 12.6586 11.62ZM12.4986 2.75C10.4686 2.75 8.80859 4.41 8.80859 6.44C8.80859 8.44 10.3686 10.05 12.3586 10.12C12.4086 10.11 12.5486 10.11 12.6786 10.12C14.6386 10.03 16.1786 8.42 16.1886 6.44C16.1886 4.41 14.5286 2.75 12.4986 2.75Z" fill="currentColor"></path>
+                      <path d="M12.6716 22.55C10.7116 22.55 8.74156 22.05 7.25156 21.05C5.86156 20.13 5.10156 18.87 5.10156 17.5C5.10156 16.13 5.86156 14.86 7.25156 13.93C10.2516 11.94 15.1116 11.94 18.0916 13.93C19.4716 14.85 20.2416 16.11 20.2416 17.48C20.2416 18.85 19.4816 20.12 18.0916 21.05C16.5916 22.05 14.6316 22.55 12.6716 22.55ZM8.08156 15.19C7.12156 15.83 6.60156 16.65 6.60156 17.51C6.60156 18.36 7.13156 19.18 8.08156 19.81C10.5716 21.48 14.7716 21.48 17.2616 19.81C18.2216 19.17 18.7416 18.35 18.7416 17.49C18.7416 16.64 18.2116 15.82 17.2616 15.19C14.7716 13.53 10.5716 13.53 8.08156 15.19Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+            </span>
+
+        <h2 class="mt-2 font-semibold text-base sm:text-lg text-black">
+          Cari dan Temukan Nomor-nomor Guru </h2>
+        <p class="sm:mt-1 block text-sm sm:text-base text-gray-800"> Cari dengan mudah semua kontak guru yang mengajar kelas 8E
+        </p>
+      </div>
+
+
+    </div>
+    <div class="block rounded-xl border border-gray-800 p-4 w-5/6 m-auto">
+            <span  class="inline-block rounded-lg p-3">
+               <div class="inline-flex align-middle justify-center items-center select-none text-black">
+                   <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="32" width="32">
+                    <path d="M15.2013 6.29998C15.0181 6.48691 14.9155 6.73823 14.9155 6.99998C14.9155 7.26173 15.0181 7.51305 15.2013 7.69998L16.8013 9.29998C16.9882 9.48321 17.2396 9.58584 17.5013 9.58584C17.7631 9.58584 18.0144 9.48321 18.2013 9.29998L21.4602 6.04107C21.7073 5.79397 22.1242 5.87146 22.229 6.20485C22.52 7.13078 22.583 8.11721 22.4078 9.07913C22.1892 10.279 21.61 11.3838 20.7476 12.2463C19.8852 13.1087 18.7804 13.6878 17.5805 13.9064C16.4942 14.1044 15.3767 13.9983 14.3504 13.6034C14.1561 13.5287 13.9339 13.5674 13.7867 13.7146L7.12132 20.38C6.7235 20.7778 6.18393 21.0013 5.62132 21.0013C5.05871 21.0013 4.51914 20.7778 4.12132 20.38C3.7235 19.9822 3.5 19.4426 3.5 18.88C3.5 18.3174 3.7235 17.7778 4.12132 17.38L10.7867 10.7146C10.9339 10.5674 10.9726 10.3452 10.8979 10.1509C10.503 9.12458 10.3969 8.00708 10.5949 6.92083C10.8135 5.72092 11.3926 4.61614 12.255 3.7537C13.1175 2.89127 14.2223 2.31215 15.4222 2.09352C16.3841 1.91826 17.3705 1.98134 18.2965 2.27232C18.6298 2.37708 18.7073 2.79397 18.4602 3.04107L15.2113 6.28998L15.2013 6.29998Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   </svg>
+               </div>
+            </span>
+      <h2 class="mt-2 font-semibold text-base sm:text-lg text-black">
+        the Developers </h2>
+      <p class="sm:mt-1 block text-sm sm:text-base text-gray-800">Dikelola dan diBuat oleh Cethydexyl, Penyetor Data Utama: Khlq
+      </p>
+    </div>
+  </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<!--  <script src="/javascripts/tranger.min.js"></script>-->
+  <script>
+    function decodeEntities(str) {
+      const obj = {};
+
+      let key = '';
+      let value = '';
+      let isKey = true; // Flag to indicate whether we're building a key or a value
+
+      for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+
+        if (char === ',') {
+          if (isKey) {
+            // Reached the end of a key, switch to building the value
+            isKey = false;
+          } else {
+            // Reached the end of a value, add the key-value pair to the object
+            obj[key] = value;
+            // Reset key and value, and switch to building the next key
+            key = '';
+            value = '';
+            isKey = true;
+          }
+        } else {
+          if (isKey) {
+            key += char;
+          } else {
+            value += char;
+          }
+        }
+      }
+
+// In case the string ends with a key and no value
+      if (key) {
+        obj[key] = value;
+      }
+
+      return obj;
+    }
+    let test = <%= isSuperLogged %>;
+    // pre-define the correct matching data
+    <% for (let [mapel, tugas] of Object.entries(data.tugas)) { %>
+    let mapel<%= mapel %> = document.getElementById("<%= mapel %>");
+    let spante<%= mapel %> = document.getElementById("mydic-<%= mapel %>")
+
+    <% } %>
+    window.onload = function (){
+      fetch('/getStatus').then((res)=>{
+        return res.json()
+      }).then((data)=>{
+        const s = document.getElementById("sigmaskibidi")
+        const mark = document.getElementById("unready-mark")
+        if(data){
+          s.innerHTML = 'Set UNREADY Mark'
+
+          s.classList.remove("bg-teal-200/80")
+          s.classList.remove("hover:bg-teal-400/80")
+          s.classList.add("bg-red-200/80")
+          s.classList.add("hover:bg-red-400/80")
+          if (!mark.classList.contains("hidden")) mark.classList.add("hidden")
+
+        }else{
+          s.innerHTML = 'Set READY Mark'
+          s.classList.add("bg-teal-200/80")
+          s.classList.add("hover:bg-teal-400/80")
+          s.classList.remove("bg-red-200/80")
+          s.classList.remove("hover:bg-red-400/80")
+          if (mark.classList.contains("hidden")) mark.classList.remove("hidden")
+        }
+      })
+    }
+
+    // setup IO connection between the socket
+    let conn;
+    conn = io(":3001");
+
+
+    conn.on('connect', ()=>{
+      console.log(`Connected to Socket ${conn.id}`)
+    })
+    conn.on('newDataRequestChange', (data)=> {
+      // data.emit('dispatchEventQuerySwitchOff', data)
+      window.location.reload()
+      conn.disconnect()
+    })
+
+    function mahed(){
+      window.location.href = '/up';
+    }
+  </script>
+  </body>
+</html>
